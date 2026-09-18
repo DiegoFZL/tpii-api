@@ -1,6 +1,7 @@
 package br.com.fatec.apiexemplo.controller;
 
 import br.com.fatec.apiexemplo.model.Usuario;
+import br.com.fatec.apiexemplo.service.UsuarioService;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,15 @@ import java.util.List;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    private List<Usuario> listaUsuarios = new ArrayList<>();
+    private final UsuarioService usuarioService;
+
+    public UsuarioController (UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;;
+    }
 
     @GetMapping()
-    public List<Usuario> listar() {
-        return listaUsuarios;
+    public ResponseEntity<List<Usuario>> listar() {
+        return ResponseEntity.ok(usuarioService.listar());
     }
 
     @PostMapping
